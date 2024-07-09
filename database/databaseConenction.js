@@ -1,7 +1,8 @@
 const mongoose=require("mongoose")
 
  async function connectToDb(){
-  await   mongoose.connect("mongodb+srv://learner:123456abc@cluster0.uofmtpj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-  console.log("database connected")
+  console.log("Connecting...");
+  await mongoose.connect("mongodb://localhost:27017/aces")
+  console.log("Database Connected!")
 }
 module.exports=connectToDb
