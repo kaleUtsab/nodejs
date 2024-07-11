@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar and Cards Example</title>
+    <title>Single Blog Example</title>
     <style>
         /* Internal CSS Styles */
         body {
@@ -32,28 +32,34 @@
             color: black;
         }
 
-        .card {
-            width: 300px;
-            border: 1px solid #ccc;
+        .blog-container {
+            padding: 20px;
+        }
+
+        .blog-image {
+            width: 100%;
             border-radius: 8px;
-            margin: 20px;
-            padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease;
         }
 
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .blog-content {
+            margin-top: 20px;
         }
 
-        .card img {
-            width: 100%;
-            border-radius: 8px;
+        .blog-title {
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .card .title {
+        .blog-subtitle {
             font-size: 18px;
+            color: #666;
+        }
+
+        .blog-description {
             margin-top: 10px;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -66,21 +72,21 @@
         <a href="#">Services</a>
         <a href="#">Contact</a>
     </div>
-
-   <div style="display: flex;flex-wrap: wrap;">
-     <!-- Cards Section -->
- <% blogs.forEach((blog)=>{ %>
-    <div class="card" >
-        <img src="<%- blog.image %>" alt="Card Image">
-        <div class="title"><%- blog.title %></div>
-        <a href="/blog/<%-blog._id%>" see more</a>
+    <div class="blog-container">
        
+        <div class="card">
+            <img class="blog-image" src="/<%-blog.image%>" alt="Blog Image">
+            <div class="blog-content">
+                <h1><%-blog.title%></h1>
+                <div class="blog-subtitle"><%-blog.subtitle%>"></div>
+                <div class="blog-description">
+                    <p><%-blog.description%></p>
+                </div>
+            </div>
+        </div>
     </div>
- <% }) %>
-
-    
-   </div>
-  
+    <button><a href="/deleteblog/<%-blog.id%>">Delete Me</a></button>
+    <button><a href="/editblog/<%-blog.id%>"> Edit me</a></button>
 
 </body>
 
