@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express");
 const connectToDb = require("./database/databaseConenction");
 const Blog = require("./model/blogModel");
@@ -6,6 +7,10 @@ const { multer, storage } = require("./middleware/multerconfig");
 const upload = multer({ storage: storage });
 const Login =require("./model/signmodel")
 const bcrypt=require("bcrypt")
+const jwt = require("jsonwebtoken")
+const isAuthenticate=require("./middleware/isAunthenticate")
+const cookieParser=require('cookie-parser')
+app.use(cookieParser())
 
 connectToDb();
 app.use(express.json());
@@ -19,7 +24,7 @@ app.get("/about", (req, res) => {
 app.get("/about", (req, res) => {
   req.render("about.ejs", {});
 });
-app.get("/createblog", (req, res) => {
+app.get("/createblog",isAuthenticate, (req, res) => {
   res.render("./blogs/createblog");
 });
 app.post("/createblog", upload.single("image"), async (req, res) => {
@@ -107,14 +112,18 @@ res.send("Logged In")
  }
  const isMatched =bcrypt.compareSync(password,userdata.password)
 if(isMatched){
+  const token =  jwt.sign({userId:userdata.id},process.env.SECRET,{expiresIn:'20d'})
+  res.cookie("token",token)
     res.send("Sucessfully logged in!");
-}else{
+
+}
+else{
     res.send("Invalid credentials!")
 }
 
   
 })
-// comapre
-// token database ma stored hudaina
+//comapre
+//token database ma stored hudaina
 // session hunxa
-// mitm man in the maiddle attack bich ma  inetrcept vao vane
+//mitm man in the maiddle attack bich ma  inetrcept
